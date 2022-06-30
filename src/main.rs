@@ -14,7 +14,9 @@ fn main() {
     preparation(&mut hands_dealer, 1);
     // プレイヤーの1枚目と2枚目を表示
     println!("あなたの手札：{:?}", hands_player);
-
+    // ディーラーの手札を1枚だけ表示
+    println!("相手の手札：{}", hands_dealer[0]);
+    
     // プレイヤーは3枚目を引いた場合に3枚の合計が「21」を超えそうだと思うなら「スタンド」を選択
     println!("ヒットまたはスタンドを入力してください");
     let mut input_text = String::new();
