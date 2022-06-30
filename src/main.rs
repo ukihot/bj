@@ -17,14 +17,14 @@ fn main() {
     // ディーラーの手札を1枚だけ表示
     println!("相手の手札：[{}]", soot_translate(&hands_dealer)[0]);
 
-    // プレイヤーは3枚目を引いた場合に3枚の合計が「21」を超えそうだと思うなら「スタンド」を選択
+    //
+    let mut hit_ot_stand = String::new();
 
-    let mut answer = String::new();
     // 入力文字のバリデーション
-    while answer_validate(&answer) {
-        let mut word = String::new();
-        std::io::stdin().read_line(&mut word).ok();
-        answer = word.trim().to_string();
+    while hit_ot_stand_validate(&hit_ot_stand) {
+        let mut input_text = String::new();
+        std::io::stdin().read_line(&mut input_text).ok();
+        hit_ot_stand = input_text.trim().to_string();
     }
     // ヒットを選択して合計値が22以上ならバースト(プレイヤーの敗北)
     // ヒットを選択して合計値が20以下なら再度ヒット or スタンドを選択（ヒットは何回でもOK）
@@ -45,7 +45,7 @@ fn preparation(hands: &mut Vec<u32>, pull_max: u32) {
     });
 }
 
-fn answer_validate(c: &str) -> bool {
+fn hit_ot_stand_validate(c: &str) -> bool {
     if c == "h" {
         false
     } else if c == "s" {
