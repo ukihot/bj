@@ -24,6 +24,7 @@ pub fn score_calculate(hands: &Vec<u32>) -> u32 {
             // 想定外
             _ => panic!(),
         }
+        println!("now ={}",score);
         score += index;
     }
     score
