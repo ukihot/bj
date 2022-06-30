@@ -51,13 +51,13 @@ fn ask_hit() -> String {
 プレイヤーとディーラーの共通処理
 */
 fn preparation(hands: &mut Vec<u32>, pull_max: u32, cards_status: &mut [bool; 52]) {
-    // カードは52枚
-    // プレイヤーはカードを2枚引く
+    // カードを手札に加える
     (0..pull_max).for_each(|n| {
         hands.push(deck_editer::pull_card(cards_status));
     });
 }
 
+// hかsしか入力は受け付けない
 fn hit_or_stand_validate(c: &str) -> bool {
     if c == "h" {
         false
