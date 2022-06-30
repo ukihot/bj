@@ -6,7 +6,8 @@ fn main() {
     let mut cards_status: [bool; 52] = [true; 52];
     let mut hands_player = vec![];
     let mut hands_dealer = vec![];
-    let mut score: u32 = 0;
+    let mut score_player: u32 = 0;
+    let mut score_dealer: u32 = 0;
 
     // 挨拶
     println!("ブラックジャックを開始します。");
@@ -34,17 +35,33 @@ fn main() {
             "あなたの手札：{:?}",
             translater::soot_translate(&hands_player)
         );
-        score = calculater::score_calculate(&hands_player);
+        score_player = calculater::score_calculate(&hands_player);
         // 点数の表示
-        println!("現在の点数：{}", score);
-        if score > 21 {
+        println!("現在の点数：{}", score_player);
+        if score_player > 21 {
             println!("バーストしました。");
             std::process::exit(0);
         }
     }
-    // プレイヤーが合計値21以下でスタンドしたらディーラーは合計値が17以上になるまで無条件にカードを引く
-    println!("スタンドしました。\nディーラーがカードを引きます。")
+    // プレイヤーが合計値21以下でスタンドしたらディーラーは合計値が17以上になるまでカードを引く
+    println!("スタンドしました。\nディーラーがカードを引きます。");
+    while calculater::score_calculate(&hands_dealer) < 16 {
+        preparation(&mut hands_dealer, 1, &mut cards_status);
+    }
+    score_dealer = calculater::score_calculate(&hands_dealer);
     // プレイヤーとディーラーが引き終えたら勝負。より21に近い方の勝ち
+    if score_dealer > 21 {
+        println!("ディーラーがバーストしました：{}", score_dealer);
+        println!("Victory");
+    } else if score_player > score_dealer {
+        println!("ディーラーの点数に勝ちました：{}", score_dealer);
+        println!("Victory");
+    } else if score_player == score_dealer {
+        println!("Draw");
+    } else {
+        println!("ディーラーの点数に負けました：{}", score_dealer);
+        println!("Lose");
+    }
 }
 
 fn ask_hit() -> String {
