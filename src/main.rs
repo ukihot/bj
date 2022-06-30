@@ -1,5 +1,5 @@
 use crate::recipes::deck_editer;
-use crate::recipes::translater::soot_translate as soot_translate;
+use crate::recipes::translater::soot_translate;
 mod recipes;
 
 fn main() {
@@ -16,16 +16,16 @@ fn main() {
     println!("あなたの手札：{:?}", soot_translate(&hands_player));
     // ディーラーの手札を1枚だけ表示
     println!("相手の手札：[{}]", soot_translate(&hands_dealer)[0]);
-    
+
     // プレイヤーは3枚目を引いた場合に3枚の合計が「21」を超えそうだと思うなら「スタンド」を選択
-    println!("ヒットまたはスタンドを入力してください");
-    let mut input_text = String::new();
-    std::io::stdin().read_line(&mut input_text).ok();
-    let hit_or_stand = input_text.trim().to_string();
-    // 次を引いても「21」を超えなさそうなら「ヒット」を選択
-    // JとQとKは「10」として扱う
-    // Aは「1」もしくは「11」どちらか都合のいいように扱う
-    // スタンド ... カードを引かずに勝負する / ヒット ... もう一枚引く
+
+    let mut answer = String::new();
+    // 入力文字のバリデーション
+    while answer_validate(&answer) {
+        let mut word = String::new();
+        std::io::stdin().read_line(&mut word).ok();
+        answer = word.trim().to_string();
+    }
     // ヒットを選択して合計値が22以上ならバースト(プレイヤーの敗北)
     // ヒットを選択して合計値が20以下なら再度ヒット or スタンドを選択（ヒットは何回でもOK）
     // プレイヤーが合計値21以下で勝負を待っている状態になったらディーラーは合計値が17以上になるまで無条件にカードを引く
@@ -43,4 +43,15 @@ fn preparation(hands: &mut Vec<u32>, pull_max: u32) {
     (0..pull_max).for_each(|n| {
         hands.push(deck_editer::pull_card(&mut cards_status));
     });
+}
+
+fn answer_validate(c: &str) -> bool {
+    if c == "h" {
+        false
+    } else if c == "s" {
+        false
+    } else {
+        println!("ヒットならh、スタンドならsを入力してください[h / s]");
+        true
+    }
 }
