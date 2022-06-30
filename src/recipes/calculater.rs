@@ -38,7 +38,7 @@ pub fn score_calculate(hands: &Vec<u32>) -> u32 {
 // use_ace個の可能な限りの1と11の組み合わせの合計値を求めたい
 fn decision_ace(score: u32, use_ace: u32) -> u32 {
     // 11の枚数
-    let eleven: u32 = (22 - score - use_ace) / 10;
+    let eleven: u32 = (21 - score - use_ace) / 10;
     // 1の枚数
     let one: u32 = use_ace - eleven;
 
