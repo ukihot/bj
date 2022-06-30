@@ -11,21 +11,23 @@ fn main() {
     // プレイヤーが2枚引いて準備
     preparation(&mut hands_player, 2);
     // ディーラーが1枚引いて準備
-    preparation(&mut hands_dealer, 1);
+    preparation(&mut hands_dealer, 2);
     // プレイヤーの1枚目と2枚目を表示
     println!("あなたの手札：{:?}", soot_translate(&hands_player));
     // ディーラーの手札を1枚だけ表示
     println!("相手の手札：[{}]", soot_translate(&hands_dealer)[0]);
 
-    //
-    let mut hit_ot_stand = String::new();
+    // ヒットかスタンドか選択
+    let mut hit_or_stand = String::new();
 
     // 入力文字のバリデーション
-    while hit_ot_stand_validate(&hit_ot_stand) {
+    while hit_ot_stand_validate(&hit_or_stand) {
         let mut input_text = String::new();
         std::io::stdin().read_line(&mut input_text).ok();
-        hit_ot_stand = input_text.trim().to_string();
+        hit_or_stand = input_text.trim().to_string();
     }
+    println!("{}です", hit_or_stand);
+
     // ヒットを選択して合計値が22以上ならバースト(プレイヤーの敗北)
     // ヒットを選択して合計値が20以下なら再度ヒット or スタンドを選択（ヒットは何回でもOK）
     // プレイヤーが合計値21以下で勝負を待っている状態になったらディーラーは合計値が17以上になるまで無条件にカードを引く
