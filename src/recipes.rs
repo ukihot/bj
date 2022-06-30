@@ -1,2 +1,3 @@
 pub mod deck_editer;
-pub mod score_calculate;
+pub mod calculater;
+pub mod translater;

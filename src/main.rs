@@ -1,5 +1,5 @@
 use crate::recipes::deck_editer;
-
+use crate::recipes::translater::soot_translate as soot_translate;
 mod recipes;
 
 fn main() {
@@ -13,9 +13,9 @@ fn main() {
     // ディーラーが1枚引いて準備
     preparation(&mut hands_dealer, 1);
     // プレイヤーの1枚目と2枚目を表示
-    println!("あなたの手札：{:?}", hands_player);
+    println!("あなたの手札：{:?}", soot_translate(&hands_player));
     // ディーラーの手札を1枚だけ表示
-    println!("相手の手札：{}", hands_dealer[0]);
+    println!("相手の手札：[{}]", soot_translate(&hands_dealer)[0]);
     
     // プレイヤーは3枚目を引いた場合に3枚の合計が「21」を超えそうだと思うなら「スタンド」を選択
     println!("ヒットまたはスタンドを入力してください");
