@@ -6,6 +6,7 @@ fn main() {
     let mut cards_status: [bool; 52] = [true; 52];
     let mut hands_player = vec![];
     let mut hands_dealer = vec![];
+    let mut score: u32 = 0;
 
     // 挨拶
     println!("ブラックジャックを開始します。");
@@ -33,11 +34,13 @@ fn main() {
             "あなたの手札：{:?}",
             translater::soot_translate(&hands_player)
         );
-        if calculater::score_calculate(&hands_player) > 21 {
-            std::process::exit(1);
-        }
+        score = calculater::score_calculate(&hands_player);
         // 点数の表示
-        println!("現在の点数：{}", calculater::score_calculate(&hands_player));
+        println!("現在の点数：{}", score);
+        if score > 21 {
+            println!("バーストしました。");
+            std::process::exit(0);
+        }
     }
 
     // ヒットを選択して合計値が22以上ならバースト(プレイヤーの敗北)
