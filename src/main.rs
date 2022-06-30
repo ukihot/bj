@@ -45,7 +45,7 @@ fn main() {
     }
     // プレイヤーが合計値21以下でスタンドしたらディーラーは合計値が17以上になるまでカードを引く
     println!("スタンドしました。\nディーラーがカードを引きます。");
-    while calculater::score_calculate(&hands_dealer) < 16 {
+    while calculater::score_calculate(&hands_dealer) < 18 {
         preparation(&mut hands_dealer, 1, &mut cards_status);
     }
     score_dealer = calculater::score_calculate(&hands_dealer);
