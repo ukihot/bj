@@ -3,16 +3,17 @@ use crate::recipes::deck_editer;
 mod recipes;
 
 fn main() {
-    // 挨拶
-    println!("ブラックジャックを開始します。");
-    // カードは52枚
-    let mut cards_status: [bool; 52] = [false; 52];
     let mut hands_player = vec![];
     let mut hands_dealer = vec![];
 
-    // プレイヤーとディーラーはそれぞれカードを2枚引く
-    deck_editer::pull_card(cards_status, hands_player, hands_dealer, 2, 2);
-    // プレイヤーの1枚目と2枚目、ディーラーの1枚目を表示
+    // 挨拶
+    println!("ブラックジャックを開始します。");
+    // プレイヤーが2枚引いて準備
+    preparation(&mut hands_player, 2);
+    // ディーラーが1枚引いて準備
+    preparation(&mut hands_dealer, 1);
+    // プレイヤーの1枚目と2枚目を表示
+    println!("あなたの手札：{:?}", hands_player);
 
     // プレイヤーは3枚目を引いた場合に3枚の合計が「21」を超えそうだと思うなら「スタンド」を選択
     println!("ヒットまたはスタンドを入力してください");
@@ -28,4 +29,16 @@ fn main() {
     // プレイヤーが合計値21以下で勝負を待っている状態になったらディーラーは合計値が17以上になるまで無条件にカードを引く
     // バーストしたらプレイヤーの勝利
     // プレイヤーとディーラーが引き終えたら勝負。より21に近い方の勝ち
+}
+
+/*
+プレイヤーとディーラーの共通処理
+*/
+fn preparation(hands: &mut Vec<u32>, pull_max: u32) {
+    // カードは52枚
+    let mut cards_status: [bool; 52] = [false; 52];
+    // プレイヤーはカードを2枚引く
+    (0..pull_max).for_each(|n| {
+        hands.push(deck_editer::pull_card(&mut cards_status));
+    });
 }
