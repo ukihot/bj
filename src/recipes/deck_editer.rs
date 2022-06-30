@@ -1,4 +1,3 @@
-// cards_statusの中からfalseのカードを検索
 pub(crate) fn pull_card(
     cards_status: [bool; 52],
     hands_player: Vec<u32>,
@@ -6,5 +5,5 @@ pub(crate) fn pull_card(
     add_pleyer: i32,
     add_dealer: i32,
 ) -> () {
-    todo!()
+    // cards_statusの中からfalseのカードを検索
 }
