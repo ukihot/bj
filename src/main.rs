@@ -33,6 +33,9 @@ fn main() {
             "あなたの手札：{:?}",
             translater::soot_translate(&hands_player)
         );
+        if calculater::score_calculate(&hands_player) > 21 {
+            std::process::exit(1);
+        }
         // 点数の表示
         println!("現在の点数：{}", calculater::score_calculate(&hands_player));
     }
