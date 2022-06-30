@@ -3,15 +3,17 @@ use crate::recipes::translater::soot_translate;
 mod recipes;
 
 fn main() {
+    // カードは52枚
+    let mut cards_status: [bool; 52] = [true; 52];
     let mut hands_player = vec![];
     let mut hands_dealer = vec![];
 
     // 挨拶
     println!("ブラックジャックを開始します。");
     // プレイヤーが2枚引いて準備
-    preparation(&mut hands_player, 2);
+    preparation(&mut hands_player, 2, &mut cards_status);
     // ディーラーが1枚引いて準備
-    preparation(&mut hands_dealer, 2);
+    preparation(&mut hands_dealer, 2, &mut cards_status);
     // プレイヤーの手札をすべて表示
     println!("あなたの手札：{:?}", soot_translate(&hands_player));
     // ディーラーの手札を1枚だけ表示
@@ -20,7 +22,7 @@ fn main() {
     // ヒットを尋ね続ける
     while ask_hit() == "h" {
         println!("新しくカードを引きました。");
-        preparation(&mut hands_player, 1);
+        preparation(&mut hands_player, 1, &mut cards_status) ;
         // プレイヤーの1枚目と2枚目を表示
         println!("あなたの手札：{:?}", soot_translate(&hands_player));
     }
@@ -48,12 +50,11 @@ fn ask_hit() -> String {
 /*
 プレイヤーとディーラーの共通処理
 */
-fn preparation(hands: &mut Vec<u32>, pull_max: u32) {
+fn preparation(hands: &mut Vec<u32>, pull_max: u32, cards_status: &mut [bool; 52]) {
     // カードは52枚
-    let mut cards_status: [bool; 52] = [true; 52];
     // プレイヤーはカードを2枚引く
     (0..pull_max).for_each(|n| {
-        hands.push(deck_editer::pull_card(&mut cards_status));
+        hands.push(deck_editer::pull_card(cards_status));
     });
 }
 
