@@ -22,7 +22,7 @@ fn main() {
     // ヒットを尋ね続ける
     while ask_hit() == "h" {
         println!("新しくカードを引きました。");
-        preparation(&mut hands_player, 1, &mut cards_status) ;
+        preparation(&mut hands_player, 1, &mut cards_status);
         // プレイヤーの1枚目と2枚目を表示
         println!("あなたの手札：{:?}", soot_translate(&hands_player));
     }
