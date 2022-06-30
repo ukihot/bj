@@ -36,7 +36,7 @@ fn main() {
 */
 fn preparation(hands: &mut Vec<u32>, pull_max: u32) {
     // カードは52枚
-    let mut cards_status: [bool; 52] = [false; 52];
+    let mut cards_status: [bool; 52] = [true; 52];
     // プレイヤーはカードを2枚引く
     (0..pull_max).for_each(|n| {
         hands.push(deck_editer::pull_card(&mut cards_status));
