@@ -1,5 +1,8 @@
-use crate::recipes::deck_editer;
-use crate::recipes::translater::soot_translate;
+use crate::recipes::{
+    deck_editer,
+    translater,
+    calculater
+};
 mod recipes;
 
 fn main() {
@@ -7,6 +10,8 @@ fn main() {
     let mut cards_status: [bool; 52] = [true; 52];
     let mut hands_player = vec![];
     let mut hands_dealer = vec![];
+    let mut score_player: u32 = 0;
+    let mut score_dealer: u32 = 0;
 
     // 挨拶
     println!("ブラックジャックを開始します。");
@@ -15,16 +20,19 @@ fn main() {
     // ディーラーが1枚引いて準備
     preparation(&mut hands_dealer, 2, &mut cards_status);
     // プレイヤーの手札をすべて表示
-    println!("あなたの手札：{:?}", soot_translate(&hands_player));
+    println!("あなたの手札：{:?}", translater::soot_translate(&hands_player));
     // ディーラーの手札を1枚だけ表示
-    println!("相手の手札：[{}]", soot_translate(&hands_dealer)[0]);
+    println!("相手の手札：[{}]", translater::soot_translate(&hands_dealer)[0]);
 
     // ヒットを尋ね続ける
     while ask_hit() == "h" {
         println!("新しくカードを引きました。");
         preparation(&mut hands_player, 1, &mut cards_status);
+        // スコアの集計
+        score_player = calculater::score_calculate(&hands_player);
+
         // プレイヤーの1枚目と2枚目を表示
-        println!("あなたの手札：{:?}", soot_translate(&hands_player));
+        println!("あなたの手札：{:?}", translater::soot_translate(&hands_player));
     }
 
     // ヒットを選択して合計値が22以上ならバースト(プレイヤーの敗北)
