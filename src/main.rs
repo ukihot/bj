@@ -1,3 +1,4 @@
+use std::io;
 use crate::recipes::{calculater, deck_editer, translater};
 mod recipes;
 
@@ -62,6 +63,11 @@ fn main() {
         println!("ディーラーの点数に負けました：{}", score_dealer);
         println!("Lose");
     }
+
+    // 何かキーを押されたら終わり
+    let mut g = String::new();
+    println!("\nゲームが終了しました。プログラムを終了させるには何かキーを押してください。");
+    io::stdin().read_line(&mut g).ok();
 }
 
 fn ask_hit() -> String {
@@ -71,7 +77,7 @@ fn ask_hit() -> String {
     // 入力文字のバリデーション
     while hit_or_stand_validate(&hit_or_stand) {
         let mut input_text = String::new();
-        std::io::stdin().read_line(&mut input_text).ok();
+        io::stdin().read_line(&mut input_text).ok();
         hit_or_stand = input_text.trim().to_string();
     }
     hit_or_stand
